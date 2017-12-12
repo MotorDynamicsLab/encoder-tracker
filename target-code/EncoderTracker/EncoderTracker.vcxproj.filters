@@ -31,9 +31,6 @@
     <Filter Include="app_code\hal\src">
       <UniqueIdentifier>{fae4bfe1-6bfd-4145-98fe-f01f2ab5c95b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="support\Device-specific files">
-      <UniqueIdentifier>{2017913d-b966-422c-9212-0eafbc85410e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="VisualGDB settings">
       <UniqueIdentifier>{2c7f6f1d-d8ef-4658-84fa-0b61776c048d}</UniqueIdentifier>
       <Extensions>*.vgdbsettings</Extensions>

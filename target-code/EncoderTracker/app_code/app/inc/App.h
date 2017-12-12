@@ -20,13 +20,12 @@ class App
 private:
 	void ConfigEncoder();
 	void ConfigSpi();
-	void ConfigExit();
-	void ConfigTick();
+	void ConfigExtInt();
 public:
 	App();
 
 	void Initialize();
-	void UpdateEncoderVals();
+	void Execute();
 	void ServeSpi();
 	void ExtIntClear();
 };

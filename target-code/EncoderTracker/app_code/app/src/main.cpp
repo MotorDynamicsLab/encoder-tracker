@@ -6,22 +6,25 @@
 //###########################################################################
 #include "App.h"
 
+App app;
 
 int main(void)
 {
 	System::Initialize();
 	System::ConfigureForHsi();
-	
-	while (1);
+	app.Initialize();
+
+	while (1)
+	{
+		app.Execute();
+	}
 }
 
 extern "C"
 {
 	void EXTI4_IRQHandler()
 	{
-	}
-
-	void TIM7_IRQHandler()
-	{
+		app.ServeSpi();
+		app.ExtIntClear();
 	}
 }
