@@ -1,4 +1,11 @@
-#include "AppHeaders.h"
+//###########################################################################
+// main.cpp
+// main entry point of code, also contains interrupt handlers
+//
+// $Copyright: Copyright (C) LDO Systems
+//###########################################################################
+#include "App.h"
+
 
 int main(void)
 {
@@ -6,4 +13,15 @@ int main(void)
 	System::ConfigureForHsi();
 	
 	while (1);
+}
+
+extern "C"
+{
+	void EXTI4_IRQHandler()
+	{
+	}
+
+	void TIM7_IRQHandler()
+	{
+	}
 }
