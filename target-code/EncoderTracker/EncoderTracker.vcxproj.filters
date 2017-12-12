@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="support">
+      <UniqueIdentifier>{81c95f97-a64e-48a8-86ef-bdb4e9269e09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\cmsis-core">
+      <UniqueIdentifier>{b0babc9a-eb1e-4824-84d0-74d958cc0bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\cmsis-core\inc">
+      <UniqueIdentifier>{427eca14-b7fb-4bcd-985c-042984cb9c17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\cmsis-core\src">
+      <UniqueIdentifier>{06353073-4850-4be9-a723-0b4805b659a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_code">
+      <UniqueIdentifier>{0383572a-2628-42af-9f84-dccb0557f430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_code\app">
+      <UniqueIdentifier>{689f922c-016e-4362-83dc-765049adaab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_code\app\src">
+      <UniqueIdentifier>{4c759f74-4c5e-4188-aa81-c4c1568a4174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_code\hal">
+      <UniqueIdentifier>{29a3f05b-f1c0-4024-ad9a-d1124dcaf80e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_code\hal\inc">
+      <UniqueIdentifier>{20c4cbe4-4535-4f07-9562-4886466c64e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_code\hal\src">
+      <UniqueIdentifier>{fae4bfe1-6bfd-4145-98fe-f01f2ab5c95b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support\Device-specific files">
+      <UniqueIdentifier>{2017913d-b966-422c-9212-0eafbc85410e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{2c7f6f1d-d8ef-4658-84fa-0b61776c048d}</UniqueIdentifier>
+      <Extensions>*.vgdbsettings</Extensions>
+    </Filter>
+    <Filter Include="app_code\app\inc">
+      <UniqueIdentifier>{4e671d5b-c5a6-4b4d-939d-55f93372879a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="support\cmsis-core\src\system_stm32f3xx.c">
+      <Filter>support\cmsis-core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\app\src\main.cpp">
+      <Filter>app_code\app\src</Filter>
+    </ClCompile>
+    <ClCompile Include="support\cmsis-core\src\startup_stm32f303xc.c">
+      <Filter>support\cmsis-core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\Gpio.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\Gpi.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\Gpo.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\System.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\Spi.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\Dma.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\BasicTimer.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\ExtInterrupt.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\Nvic.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\app\src\App.cpp">
+      <Filter>app_code\app\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\Encoder.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="support\cmsis-core\inc\core_cm4.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\system_stm32f3xx.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\stm32f303xc.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\arm_common_tables.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\arm_const_structs.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\arm_math.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\cmsis_armcc.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\cmsis_armcc_V6.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\cmsis_gcc.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\AppHeaders.h">
+      <Filter>app_code</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\Gpio.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\stm32f3xx.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\SysTickCtrl.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\Gpo.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\Gpi.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\core_cmFunc.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\core_cmInstr.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\core_cmSimd.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\System.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="support\cmsis-core\inc\stm32f303xe.h">
+      <Filter>support\cmsis-core\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\HalHeaders.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\Spi.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\Dma.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\BasicTimer.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\ExtInterrupt.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\Nvic.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\app\inc\App.h">
+      <Filter>app_code\app\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\Encoder.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="stm32.props" />
+    <None Include="EncoderTracker-Debug.vgdbsettings" />
+    <None Include="EncoderTracker-Release.vgdbsettings" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="stm32.xml">
+      <Filter>VisualGDB settings</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>
