@@ -160,13 +160,6 @@ void App::ServeSpi()
 }
 
 
-///Clears external interrupt flag and allow interrupt to trigger once again
-void App::ExtIntClear()
-{
-	exti.Clear();
-}
-
-
 ///Transmits selected encoder values to the SPI master
 void App::SendEncoderVals(uint8_t header)
 {

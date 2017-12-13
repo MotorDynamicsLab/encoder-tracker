@@ -49,7 +49,9 @@ public:
 	void Initialize();
 	void Execute();
 	void ServeSpi();
-	void ExtIntClear();
+
+	///Clears external interrupt flag and allow interrupt to trigger once again
+	inline void ExtIntClear() { exti.Clear(); }
 };
 
 
