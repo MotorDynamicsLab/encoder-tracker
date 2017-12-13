@@ -178,7 +178,7 @@ void App::SendEncoderVals(uint8_t header)
 		{
 			txBuffer[numTxEncoders++] = encoderVals[i];
 		}
-		encSelector >> 1;
+		encSelector >>= 1;
 	}
 
 	misoEnable.Clear();
