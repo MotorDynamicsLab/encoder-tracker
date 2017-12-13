@@ -19,6 +19,10 @@ class App
 {
 private:
 	static const uint16_t num_encoders = 4;
+	static const uint8_t cmd_mask = 0x0F;
+	static const uint8_t enc_offset = 4;
+	static const uint8_t read_cmd = 0x0F;
+	static const uint8_t reset_cmd = 0x00;
 
 	enum EncoderIndex
 	{
@@ -29,6 +33,7 @@ private:
 	};
 
 	ExtInterrupt exti;
+	Spi spi;
 	Encoder encoderList[num_encoders];
 	int32_t encoderVals[num_encoders];
 	uint16_t oldEncoderCounts[num_encoders];
@@ -36,6 +41,9 @@ private:
 	void ConfigEncoder();
 	void ConfigSpi();
 	void ConfigExtInt();
+	void SendEncoderVals(uint8_t header);
+	void ClearEncoderVals(uint8_t header);
+
 public:
 	App();
 	void Initialize();

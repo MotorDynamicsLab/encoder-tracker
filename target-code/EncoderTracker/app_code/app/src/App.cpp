@@ -8,6 +8,12 @@
 
 App::App()
 {
+	for (int i = 0; i < num_encoders; ++i)
+	{
+		encoderVals[i] = 0;
+		oldEncoderCounts[i] = 0;
+	}
+	
 }
 
 
@@ -75,6 +81,27 @@ void App::ConfigEncoder()
 ///Configures an SPI module as slave
 void App::ConfigSpi()
 {
+	Spi::SpiPinConfig spiPinConfig;
+	spiPinConfig.sckPin = 5;
+	spiPinConfig.mosiPin = 7;
+	spiPinConfig.misoPin = 6;
+
+	spiPinConfig.misoAltNum = 5;
+	spiPinConfig.mosiAltNum = 5;
+	spiPinConfig.sckAltNum = 5;
+
+	spiPinConfig.misoCh = Gpio::_ChA;
+	spiPinConfig.mosiCh = Gpio::_ChA;
+	spiPinConfig.sckCh = Gpio::_ChA;
+
+	spi.Initialize(Spi::SpiChannel::_Spi1);
+	spi.ConfigBitMode(Spi::SpiBitMode::_TwoLine);
+	spi.ConfigCrc(false);
+	spi.ConfigFrame(Spi::SpiLsbFirst::_MsbFirst, Spi::SpiDataSize::_8Bit);
+	spi.ConfigFifoRecThreshold(Spi::SpiRxFifoThres::_2Byte);
+	spi.ConfigFrameFormat(Spi::SpiFrameFormat::_MotorolaMode);
+	spi.ConfigModeAndPins(Spi::SpiMasterSel::_Slave, Spi::SpiMode::_Cpol0Cpha0, spiPinConfig);
+	spi.ConfigBaudRatePrescaler(Spi::SpiBaudRate::_Fpclk8);
 }
 
 
@@ -116,6 +143,20 @@ void App::Execute()
 ///Interprets and executes command from the SPI master
 void App::ServeSpi()
 {
+	uint8_t header = 0;
+	uint8_t cmd = 0;
+
+	spi.Read(&header, 1);
+	cmd = header & cmd_mask;
+
+	if (read_cmd == cmd)
+	{
+		SendEncoderVals(header);
+	}
+	else if (reset_cmd == cmd)
+	{
+		ClearEncoderVals(header);
+	}
 }
 
 
@@ -123,5 +164,25 @@ void App::ServeSpi()
 void App::ExtIntClear()
 {
 	exti.Clear();
+}
+
+
+///Transmits selected encoder values to the SPI master
+void App::SendEncoderVals(uint8_t header)
+{
+
+}
+
+
+///Resets selected encoder values to 0
+void App::ClearEncoderVals(uint8_t header)
+{
+	uint8_t encSelector = header >> enc_offset;
+
+	for (int i = 0; i < num_encoders; ++i)
+	{
+		if (encSelector & 0x01) encoderVals[i] = 0;
+		encSelector >> 1;
+	}
 }
 
