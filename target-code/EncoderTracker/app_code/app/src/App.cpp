@@ -81,6 +81,20 @@ void App::ConfigSpi()
 ///Configures the chip select pin as an external interrupt
 void App::ConfigExtInt()
 {
+	Gpi csPin;
+	csPin.Initialize(Gpio::_ChA, 4);
+	csPin.ConfigInputType(Gpio::_NoPull);
+
+	Nvic nvic;
+	nvic.Initialize(EXTI4_IRQn);
+	nvic.ConfigPriorityGroupSetting(Nvic::_PriorityGroup1);
+	nvic.SetPriority(0, 0);
+	nvic.EnableInterrupt();
+
+	exti.Initialize(4);
+	exti.ConfigExtPin(Gpio::_ChA, 4);
+	exti.ConfigMode(ExtInterrupt::_Interrupt);
+	exti.ConfigTriggerEdge(ExtInterrupt::_Falling);
 }
 
 
@@ -108,5 +122,6 @@ void App::ServeSpi()
 ///Clears external interrupt flag and allow interrupt to trigger once again
 void App::ExtIntClear()
 {
+	exti.Clear();
 }
 

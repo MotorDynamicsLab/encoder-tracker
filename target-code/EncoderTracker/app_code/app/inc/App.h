@@ -28,6 +28,7 @@ private:
 		_Z = 3,
 	};
 
+	ExtInterrupt exti;
 	Encoder encoderList[num_encoders];
 	int32_t encoderVals[num_encoders];
 	uint16_t oldEncoderCounts[num_encoders];
