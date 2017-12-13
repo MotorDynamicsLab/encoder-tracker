@@ -94,14 +94,14 @@ void App::ConfigSpi()
 	spiPinConfig.mosiCh = Gpio::_ChA;
 	spiPinConfig.sckCh = Gpio::_ChA;
 
-	spi.Initialize(Spi::SpiChannel::_Spi1);
-	spi.ConfigBitMode(Spi::SpiBitMode::_TwoLine);
+	spi.Initialize(Spi::_Spi1);
+	spi.ConfigBitMode(Spi::_TwoLine);
 	spi.ConfigCrc(false);
-	spi.ConfigFrame(Spi::SpiLsbFirst::_MsbFirst, Spi::SpiDataSize::_8Bit);
-	spi.ConfigFifoRecThreshold(Spi::SpiRxFifoThres::_2Byte);
-	spi.ConfigFrameFormat(Spi::SpiFrameFormat::_MotorolaMode);
-	spi.ConfigModeAndPins(Spi::SpiMasterSel::_Slave, Spi::SpiMode::_Cpol0Cpha0, spiPinConfig);
-	spi.ConfigBaudRatePrescaler(Spi::SpiBaudRate::_Fpclk8);
+	spi.ConfigFrame(Spi::_MsbFirst, Spi::_8Bit);
+	spi.ConfigFifoRecThreshold(Spi::_1Byte);
+	spi.ConfigFrameFormat(Spi::_MotorolaMode);
+	spi.ConfigModeAndPins(Spi::_Slave, Spi::_Cpol0Cpha0, spiPinConfig);
+	spi.ConfigBaudRatePrescaler(Spi::_Fpclk8);
 }
 
 
