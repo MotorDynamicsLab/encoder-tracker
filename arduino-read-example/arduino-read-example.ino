@@ -28,10 +28,9 @@ void setup()
   //SPI.beginTransaction(SPISettings(20000000, MSBFIRST, SPI_MODE0));
 }
 
-
 void loop()
 {
-  const int readPeriodMs = 500;
+  const int readPeriodMs = 200;
   
   if (LOW == digitalRead(READ_ENA_PIN))
   {
@@ -53,23 +52,23 @@ void ResetEncoder(SpiEncoders encoders)
   digitalWrite(NSS_PIN,HIGH);
 }
 
-
 long ReadEncoder(SpiEncoders encoder)
 {
   const byte read_cmd  = 0x0F;
-  int readSize = 0;
-  long encoderVal = 0;;
+  int readSize = 4;
+  long encoderVal = 0;
   
   digitalWrite(NSS_PIN,LOW);
   SPI.transfer(read_cmd | (encoder << spi_encoder_offset) );
-  delayMicroseconds(8);
+  delayMicroseconds(30);
 
   for (int i = 0; i < readSize; ++i)
   {
-    encoderVal = SPI.transfer(1);
+    encoderVal |= SPI.transfer(0xFF);
     encoderVal << 8;
   }
   
   digitalWrite(NSS_PIN,HIGH);
+  return encoderVal;
 }
 
