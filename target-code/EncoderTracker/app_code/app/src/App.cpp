@@ -170,7 +170,20 @@ void App::ExtIntClear()
 ///Transmits selected encoder values to the SPI master
 void App::SendEncoderVals(uint8_t header)
 {
+	uint8_t encSelector = header >> enc_offset;
+	uint16_t numTxEncoders = 0;
+	int32_t txBuffer[num_encoders];
 
+	for (int i = 0; i < num_encoders; ++i)
+	{
+		if (encSelector & 0x01)
+		{
+			txBuffer[numTxEncoders++] = encoderVals[i];
+		}
+		encSelector >> 1;
+	}
+
+	spi.Write( (uint8_t*)txBuffer, numTxEncoders * sizeof(int32_t) );
 }
 
 
