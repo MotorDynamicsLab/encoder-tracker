@@ -167,26 +167,8 @@ uint8_t Spi::ReadWriteByte(uint8_t txData)
 }
 
 ///Receive data from SPI port
-bool isRxReady = true;
 void Spi::Read(uint8_t* rxData, uint16_t rxSize)
 {
-	if (!isRxReady)
-	{
-		return;
-	}
-	else
-	{
-		isRxReady = !isRxReady;
-	}
-
-	//Set the Rx FiFo threshold
-	SET_BIT(base->CR2, SPI_CR2_FRXTH);
-
-	if (!(base->CR1 & SPI_CR1_SPE_Msk))
-	{
-		Enable();
-	}
-
 	while (0 < rxSize)
 	{
 		if (base->SR & SPI_SR_RXNE_Msk)
@@ -199,14 +181,10 @@ void Spi::Read(uint8_t* rxData, uint16_t rxSize)
 
 	//Check the end of the transaction
 	//Control if the TX fifo is empty
-	while (base->SR & SPI_SR_FTLVL_Msk)
-	{
-		//Disable TXE, RXNE and ERR interrupts for the interrupt process
-		//base->CR2 &= ~(SPI_CR2_TXEIE | SPI_CR2_RXNEIE | SPI_CR2_ERRIE);
-	}
+	while (base->SR & SPI_SR_FTLVL_Msk);
+
 	//Control the BSY flag
 	while (base->SR & SPI_SR_BSY_Msk);
-
 
 	// Control if the RX fifo is empty
 	uint8_t tmpreg;
@@ -214,7 +192,6 @@ void Spi::Read(uint8_t* rxData, uint16_t rxSize)
 	{
 		tmpreg = *(volatile uint8_t*)&base->DR;
 	}
-	isRxReady = !isRxReady;
 }
 
 
@@ -222,36 +199,6 @@ void Spi::Read(uint8_t* rxData, uint16_t rxSize)
 //bool isRxReady = true;
 void Spi::Write(const uint8_t* txData, uint16_t txSize)
 {
-	if (!isRxReady)
-	{
-		return;
-	}
-	else
-	{
-		isRxReady = !isRxReady;
-	}
-
-	//Check if the SPI is already enabled
-	if (!base->CR1 & SPI_CR1_SPE)
-	{
-		Enable();
-	}
-
-	if (!(base->CR1 & SPI_CR1_MSTR_Msk) || txSize == 1)
-	{
-		if (1 < txSize)
-		{
-			base->DR = *((uint16_t*)txData);
-			txData += sizeof(uint16_t);
-			txSize -= sizeof(uint16_t);
-		}
-		else
-		{
-			*(volatile uint8_t*)&base->DR = *txData++;
-			txSize--;
-		}
-	}
-
 	while (0 < txSize)
 	{
 		if (base->SR & SPI_SR_TXE_Msk)
@@ -272,14 +219,7 @@ void Spi::Write(const uint8_t* txData, uint16_t txSize)
 
 	//Check the end of the transaction
 	//Control if the TX fifo is empty
-	uint32_t bug = 0;
-	while ( base->SR & SPI_SR_FTLVL_Msk )
-	{
-		bug++;
-		//Disable TXE, RXNE and ERR interrupts for the interrupt process
-		//base->CR2 &= ~(SPI_CR2_TXEIE | SPI_CR2_RXNEIE | SPI_CR2_ERRIE);
-	}
-
+	while (base->SR & SPI_SR_FTLVL_Msk);
 
 	//Control the BSY flag
 	while (base->SR & SPI_SR_BSY_Msk)
@@ -287,13 +227,8 @@ void Spi::Write(const uint8_t* txData, uint16_t txSize)
 		base->CR2 &= ~(SPI_CR2_TXEIE | SPI_CR2_RXNEIE | SPI_CR2_ERRIE);
 	}
 
-
 	// Control if the RX fifo is empty
 	uint8_t tmpreg;
-	/*while (base->SR & SPI_SR_FRLVL_Msk)
-	{
-		tmpreg = *(volatile uint8_t*)&base->DR;
-	}*/
 	while (base->SR & SPI_SR_RXNE_Msk)
 	{
 		tmpreg = *(volatile uint8_t*)&base->DR;
@@ -305,10 +240,6 @@ void Spi::Write(const uint8_t* txData, uint16_t txSize)
 	{
 		tmpreg_ovr = base->DR;
 	}
-
-	//Clear overrun flag in 2 Lines communication mode because received is not read
-
-	isRxReady = !isRxReady;
 }
 
 
