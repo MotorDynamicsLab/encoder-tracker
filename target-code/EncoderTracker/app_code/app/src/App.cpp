@@ -102,6 +102,7 @@ void App::ConfigSpi()
 	spi.ConfigFrameFormat(Spi::_MotorolaMode);
 	spi.ConfigModeAndPins(Spi::_Slave, Spi::_Cpol0Cpha0, spiPinConfig);
 	spi.ConfigBaudRatePrescaler(Spi::_Fpclk8);
+	spi.Enable();
 
 	//this pin is used to enable or disable the 3.3V->5V level shifter
 	//when disabled, the level shifter outputs high impedence, allowing other SPI slaves to use
@@ -132,27 +133,33 @@ void App::ConfigExtInt()
 
 ///Reads the encoder counts from the Timer modules and converts them into 32bit signed values
 ///This function should be called in the main loop
+int32_t temp = -65535;
 void App::Execute()
 {
-	uint16_t encCount;
-
+	uint16_t encCount = 0;
+	int32_t encoderDataTemp = 0;
 	for (int i = 0; i < num_encoders; ++i)
 	{
 		encCount = encoderList[i].GetCounter();
 		encoderVals[i] += (int16_t)(encCount - oldEncoderCounts[i]);
 		oldEncoderCounts[i] = encCount;
+
+		encoderDataTemp = encoderVals[i];
+		AdjustDataOrder(&encoderDataTemp);
+		encoderValsSendBuf[i] = encoderDataTemp;
 	}
 }
 
 
 ///Interprets and executes command from the SPI master
+uint32_t g_head = 0;
 void App::ServeSpi()
 {
-	uint8_t header = 0;
+	uint8_t header = 0; 
 	uint8_t cmd = 0;
-
 	spi.Read(&header, 1);
 	cmd = header & cmd_mask;
+	g_head = header;
 
 	if (read_cmd == cmd)
 	{
@@ -176,7 +183,7 @@ void App::SendEncoderVals(uint8_t header)
 	{
 		if (encSelector & 0x01)
 		{
-			txBuffer[numTxEncoders++] = encoderVals[i];
+			txBuffer[numTxEncoders++] = encoderValsSendBuf[i];
 		}
 		encSelector >>= 1;
 	}
@@ -196,6 +203,20 @@ void App::ClearEncoderVals(uint8_t header)
 	{
 		if (encSelector & 0x01) encoderVals[i] = 0;
 		encSelector >> 1;
+	}
+}
+
+
+///Adjust the order of 32-bit data, try it easy to receive
+void App::AdjustDataOrder(int32_t* num)
+{
+	uint8_t* temp1 = (uint8_t*)num;
+	uint8_t ch = 0;
+	for (int i = 0; i < 2; i++)
+	{
+		ch = temp1[i];
+		temp1[i] = temp1[3 - i];
+		temp1[3 - i] = ch;
 	}
 }
 
