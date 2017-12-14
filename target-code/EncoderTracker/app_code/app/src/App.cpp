@@ -145,7 +145,7 @@ void App::Execute()
 		oldEncoderCounts[i] = encCount;
 
 		encoderDataTemp = encoderVals[i];
-		AdjustDataOrder(&encoderDataTemp);
+		ReverseEndian(&encoderDataTemp);
 		encoderValsSendBuf[i] = encoderDataTemp;
 	}
 }
@@ -207,8 +207,8 @@ void App::ClearEncoderVals(uint8_t header)
 }
 
 
-///Adjust the order of 32-bit data, try it easy to receive
-void App::AdjustDataOrder(int32_t* num)
+///Reverses byte endianness of data
+void App::ReverseEndian(int32_t* num)
 {
 	uint8_t* temp1 = (uint8_t*)num;
 	uint8_t ch = 0;

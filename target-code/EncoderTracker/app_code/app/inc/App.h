@@ -45,7 +45,7 @@ private:
 	void ConfigExtInt();
 	void SendEncoderVals(uint8_t header);
 	void ClearEncoderVals(uint8_t header);
-	void AdjustDataOrder(int32_t* num);
+	void ReverseEndian(int32_t* num);
 
 public:
 	App();
