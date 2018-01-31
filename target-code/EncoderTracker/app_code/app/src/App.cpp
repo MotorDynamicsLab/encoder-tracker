@@ -202,7 +202,7 @@ void App::ClearEncoderVals(uint8_t header)
 	for (int i = 0; i < num_encoders; ++i)
 	{
 		if (encSelector & 0x01) encoderVals[i] = 0;
-		encSelector >> 1;
+		encSelector >>= 1;
 	}
 }
 
