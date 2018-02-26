@@ -36,9 +36,9 @@ private:
 	Spi spi;
 	Gpo misoEnable;
 	Encoder encoderList[num_encoders];
-	int32_t encoderVals[num_encoders];
-	int32_t encoderValsSendBuf[num_encoders];
-	uint16_t oldEncoderCounts[num_encoders];
+	volatile int32_t encoderVals[num_encoders];
+	volatile int32_t encoderValsSendBuf[num_encoders];
+	volatile uint16_t oldEncoderCounts[num_encoders];
 
 	void ConfigEncoder();
 	void ConfigSpi();
