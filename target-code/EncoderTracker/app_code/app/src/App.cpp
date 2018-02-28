@@ -12,6 +12,7 @@ App::App()
 	{
 		encoderVals[i] = 0;
 		oldEncoderCounts[i] = 0;
+		isClearEncoder[i] = false;
 	}
 	
 }
@@ -133,7 +134,6 @@ void App::ConfigExtInt()
 
 ///Reads the encoder counts from the Timer modules and converts them into 32bit signed values
 ///This function should be called in the main loop
-int32_t temp = -65535;
 void App::Execute()
 {
 	uint16_t encCount = 0;
@@ -144,6 +144,12 @@ void App::Execute()
 		encoderVals[i] += (int16_t)(encCount - oldEncoderCounts[i]);
 		oldEncoderCounts[i] = encCount;
 
+		if (isClearEncoder[i])
+		{
+			isClearEncoder[i] = false;
+			encoderVals[i] = 0;
+		}
+
 		encoderDataTemp = encoderVals[i];
 		ReverseEndian(&encoderDataTemp);
 		encoderValsSendBuf[i] = encoderDataTemp;
@@ -152,14 +158,12 @@ void App::Execute()
 
 
 ///Interprets and executes command from the SPI master
-uint32_t g_head = 0;
 void App::ServeSpi()
 {
 	uint8_t header = 0; 
 	uint8_t cmd = 0;
 	spi.Read(&header, 1);
 	cmd = header & cmd_mask;
-	g_head = header;
 
 	if (read_cmd == cmd)
 	{
@@ -184,6 +188,7 @@ void App::SendEncoderVals(uint8_t header)
 		if (encSelector & 0x01)
 		{
 			txBuffer[numTxEncoders++] = encoderValsSendBuf[i];
+			break;
 		}
 		encSelector >>= 1;
 	}
@@ -201,7 +206,11 @@ void App::ClearEncoderVals(uint8_t header)
 
 	for (int i = 0; i < num_encoders; ++i)
 	{
-		if (encSelector & 0x01) encoderVals[i] = 0;
+		if (encSelector & 0x01) 
+		{
+			isClearEncoder[i] = true;
+			break;
+		}
 		encSelector >>= 1;
 	}
 }
@@ -219,4 +228,3 @@ void App::ReverseEndian(int32_t* num)
 		temp1[3 - i] = ch;
 	}
 }
-

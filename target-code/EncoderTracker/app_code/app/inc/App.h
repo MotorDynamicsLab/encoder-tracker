@@ -39,6 +39,7 @@ private:
 	volatile int32_t encoderVals[num_encoders];
 	volatile int32_t encoderValsSendBuf[num_encoders];
 	volatile uint16_t oldEncoderCounts[num_encoders];
+	volatile bool isClearEncoder[enc_offset];
 
 	void ConfigEncoder();
 	void ConfigSpi();
