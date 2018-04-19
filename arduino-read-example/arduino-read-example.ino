@@ -1,7 +1,7 @@
 #include <SPI.h>
 
 #define NSS_PIN 22 
-#define READ_ENA_PIN 49
+#define READ_ENA_PIN 2
 #define NULL 0
 
 static const int spi_encoder_offset = 4;
