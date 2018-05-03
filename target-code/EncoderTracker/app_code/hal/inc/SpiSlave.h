@@ -9,6 +9,7 @@
 
 #include "HalHeaders.h"
 #include "Gpio.h"
+#include "Gpi.h"
 
 //---------------------------------------------------------------------------
 // Class Definition
@@ -18,6 +19,7 @@ class SpiSlave
 protected:
 	//Members
 	volatile SPI_TypeDef *base;
+	Gpi nssPin;
 
 public:
 	//Enumerations

@@ -86,14 +86,17 @@ void App::ConfigSpi()
 	spiPinConfig.sckPin = 5;
 	spiPinConfig.mosiPin = 7;
 	spiPinConfig.misoPin = 6;
+	spiPinConfig.nssPin = 4;
 
 	spiPinConfig.misoAltNum = 5;
 	spiPinConfig.mosiAltNum = 5;
 	spiPinConfig.sckAltNum = 5;
+	spiPinConfig.nssAltNum = 5;
 
 	spiPinConfig.misoCh = Gpio::_ChA;
 	spiPinConfig.mosiCh = Gpio::_ChA;
 	spiPinConfig.sckCh = Gpio::_ChA;
+	spiPinConfig.nssCh = Gpio::_ChA;
 
 	spi.Initialize(SpiSlave::_Spi1);
 	spi.ConfigFrame(SpiSlave::_MsbFirst, SpiSlave::_8Bit);

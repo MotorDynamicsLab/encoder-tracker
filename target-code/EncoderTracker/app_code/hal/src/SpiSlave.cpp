@@ -65,9 +65,15 @@ void SpiSlave::ConfigModeAndPins(SpiMode cpolCphaMode, SpiPinConfig pinConfig)
 	misoPin.ConfigAltFunc(pinConfig.misoAltNum);
 	misoPin.ConfigSpeed(Gpio::_HighSpeed);
 
+	nssPin.Initialize(pinConfig.nssCh, pinConfig.nssPin);
+	nssPin.ConfigMode(Gpio::_Alt);
+	nssPin.ConfigAltFunc(pinConfig.nssAltNum);
+	nssPin.ConfigSpeed(Gpio::_HighSpeed);
+
 	misoPin.ConfigOutputType(Gpio::_PushPull);
 	mosiPin.ConfigInputType(Gpio::_PullUp);
 	sckPin.ConfigInputType(Gpio::_NoPull);
+	nssPin.ConfigInputType(Gpio::_NoPull);
 }
 
 
