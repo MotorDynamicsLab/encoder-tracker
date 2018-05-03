@@ -96,10 +96,8 @@ void App::ConfigSpi()
 	spiPinConfig.sckCh = Gpio::_ChA;
 
 	spi.Initialize(SpiSlave::_Spi1);
-	spi.ConfigCrc(false);
 	spi.ConfigFrame(SpiSlave::_MsbFirst, SpiSlave::_8Bit);
 	spi.ConfigFifoRecThreshold(SpiSlave::_1Byte);
-	spi.ConfigFrameFormat(SpiSlave::_MotorolaMode);
 	spi.ConfigModeAndPins(SpiSlave::_Cpol0Cpha0, spiPinConfig);
 	spi.ConfigBaudRatePrescaler(SpiSlave::_Fpclk8);
 	spi.Enable();

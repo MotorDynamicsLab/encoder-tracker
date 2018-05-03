@@ -94,20 +94,6 @@ void SpiSlave::ConfigBaudRatePrescaler(SpiBaudRate baud_rate)
 }
 
 
-///Enable or disable hardware CRC calculation
-void SpiSlave::ConfigCrc(bool isEnableCrc)
-{
-	base->CR1 = (base->CR1 & ~(SPI_CR1_CRCEN_Msk)) | (isEnableCrc << SPI_CR1_CRCEN_Pos);
-}
-
-
-///Configure the frame format to Motorola or TI mode
-void SpiSlave::ConfigFrameFormat(SpiFrameFormat frf)
-{
-	base->CR2 = (base->CR2 & ~(SPI_CR2_FRF_Msk)) | (frf << SPI_CR2_FRF_Pos);
-}
-
-
 ///Configures the threshold of the RXFIFO that triggers an RXNE event
 void SpiSlave::ConfigFifoRecThreshold(SpiRxFifoThres SpiRxThresthreshold)
 {

@@ -83,12 +83,6 @@ public:
 		_LsbFirst = 1,
 	};
 
-	enum SpiFrameFormat
-	{
-		_MotorolaMode = 0,
-		_TiMode = 1,
-	};
-
 	//Structures
 	struct SpiPinConfig
 	{
@@ -112,8 +106,6 @@ public:
 	void ConfigModeAndPins(SpiMode cpolCphaMode,SpiPinConfig pinConfig);
 	void ConfigFrame(SpiLsbFirst lsbfirst, SpiDataSize datasize);
 	void ConfigBaudRatePrescaler(SpiBaudRate baud_rate);
-	void ConfigCrc(bool isEnableCrc);
-	void ConfigFrameFormat(SpiFrameFormat frf);
 	void ConfigFifoRecThreshold(SpiRxFifoThres status);
 	void ConfigDma(bool isEnableTxDma, bool isEnableRxDma);
 	inline void Enable() { base->CR1 |= SPI_CR1_SPE; }
