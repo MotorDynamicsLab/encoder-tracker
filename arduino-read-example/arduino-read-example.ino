@@ -59,6 +59,7 @@ long ReadEncoder(SpiEncoders encoder)
   long encoderVal = 0;
   
   digitalWrite(NSS_PIN,LOW);
+  delayMicroseconds(2);
   SPI.transfer(read_cmd | (encoder << spi_encoder_offset) );
   delayMicroseconds(5);
 
