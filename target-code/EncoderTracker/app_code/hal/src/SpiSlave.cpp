@@ -4,12 +4,12 @@
 //
 // $Copyright: Copyright (C) LDO Systems
 //###########################################################################
-#include "Spi.h"
+#include "SpiSlave.h"
 #include "Gpio.h"
 #include "AppHeaders.h"
 
 ///Constructor
-Spi::Spi()
+SpiSlave::SpiSlave()
 	: base((SPI_TypeDef*)SPI1_BASE)
 {
 }
@@ -17,7 +17,7 @@ Spi::Spi()
 
 ///Initializes the internal members for the SPI object.
 ///does not actually perform any configuration
-void Spi::Initialize(SpiChannel channel)
+void SpiSlave::Initialize(SpiChannel channel)
 {
 	base = (SPI_TypeDef*)channel;
 
@@ -39,13 +39,9 @@ void Spi::Initialize(SpiChannel channel)
 ///Performs basic configuration, selects Master/Slave mode
 ///Selects CPOL and CPHA values.
 ///Configures GPIO pins for SPI use
-void Spi::ConfigModeAndPins(SpiMasterSel MasterSelection, SpiMode cpolCphaMode, SpiPinConfig pinConfig)
+void SpiSlave::ConfigModeAndPins(SpiMode cpolCphaMode, SpiPinConfig pinConfig)
 {
-	if (MasterSelection == SpiMasterSel::_Master)
-		base->CR1 |= SPI_CR1_MSTR;
-	else
-		base->CR1 &= ~SPI_CR1_MSTR;
-
+	base->CR1 &= ~SPI_CR1_MSTR;
 
 	const uint32_t cpol_cpha_msk = SPI_CR1_CPOL | SPI_CR1_CPHA;
 	base->CR1 = (base->CR1 & ~cpol_cpha_msk) | cpolCphaMode;
@@ -69,37 +65,14 @@ void Spi::ConfigModeAndPins(SpiMasterSel MasterSelection, SpiMode cpolCphaMode, 
 	misoPin.ConfigAltFunc(pinConfig.misoAltNum);
 	misoPin.ConfigSpeed(Gpio::_HighSpeed);
 
-	if (_Master == MasterSelection)
-	{
-		//misoPin.ConfigOutputType(Gpio::_PushPull);
-		//mosiPin.ConfigOutputType(Gpio::_PushPull);
-		//sckPin.ConfigOutputType(Gpio::_PushPull);
-
-		misoPin.ConfigInputType(Gpio::_PullUp);
-		mosiPin.ConfigInputType(Gpio::_PullUp);
-		sckPin.ConfigInputType(Gpio::_PullUp);
-
-		//Enable software slave management
-		base->CR1 = ( base->CR1 & ~(SPI_CR1_SSM_Msk) ) | SPI_CR1_SSM;
-
-		//SET SSI bit
-		base->CR1 = ( base->CR1 & ~(SPI_CR1_SSI_Msk) ) |  SPI_CR1_SSI;
-	}
-	else
-	{
-		misoPin.ConfigOutputType(Gpio::_PushPull);
-		mosiPin.ConfigInputType(Gpio::_PullUp);
-		sckPin.ConfigInputType(Gpio::_NoPull);
-
-		//Disable software slave management
-		base->CR1 = base->CR1 & ~(SPI_CR1_SSM_Msk);
-	}
-
+	misoPin.ConfigOutputType(Gpio::_PushPull);
+	mosiPin.ConfigInputType(Gpio::_PullUp);
+	sckPin.ConfigInputType(Gpio::_NoPull);
 }
 
 
 ///Configures the frame size and order (LSB or MSB first)
-void Spi::ConfigFrame(SpiLsbFirst lsbfirst, SpiDataSize datasize)
+void SpiSlave::ConfigFrame(SpiLsbFirst lsbfirst, SpiDataSize datasize)
 {
 	if (SpiLsbFirst::_LsbFirst == lsbfirst)
 		base->CR1 |= SPI_CR1_LSBFIRST;
@@ -115,42 +88,35 @@ void Spi::ConfigFrame(SpiLsbFirst lsbfirst, SpiDataSize datasize)
 ///Sets the baud rate of sclk during master mode
 ///The baud rate of SPI2 SPI3 is based on APP1
 ///The baud rate of SPI1 SPI4 is based on APP2
-void Spi::ConfigBaudRatePrescaler(SpiBaudRate baud_rate)
+void SpiSlave::ConfigBaudRatePrescaler(SpiBaudRate baud_rate)
 {
 	base->CR1 = (base->CR1 & ~SPI_CR1_BR_Msk) | (baud_rate << SPI_CR1_BR_Pos);
 }
 
 
-///Config 1-line or 2-line unidirectional data mode selected
-void Spi::ConfigBitMode(SpiBitMode bitmode)
-{
-	base->CR1 = (base->CR1 & ~(SPI_CR1_BIDIMODE_Msk)) | (bitmode << SPI_CR1_BIDIMODE_Pos);
-}
-
-
 ///Enable or disable hardware CRC calculation
-void Spi::ConfigCrc(bool isEnableCrc)
+void SpiSlave::ConfigCrc(bool isEnableCrc)
 {
 	base->CR1 = (base->CR1 & ~(SPI_CR1_CRCEN_Msk)) | (isEnableCrc << SPI_CR1_CRCEN_Pos);
 }
 
 
 ///Configure the frame format to Motorola or TI mode
-void Spi::ConfigFrameFormat(SpiFrameFormat frf)
+void SpiSlave::ConfigFrameFormat(SpiFrameFormat frf)
 {
 	base->CR2 = (base->CR2 & ~(SPI_CR2_FRF_Msk)) | (frf << SPI_CR2_FRF_Pos);
 }
 
 
 ///Configures the threshold of the RXFIFO that triggers an RXNE event
-void Spi::ConfigFifoRecThreshold(SpiRxFifoThres SpiRxThresthreshold)
+void SpiSlave::ConfigFifoRecThreshold(SpiRxFifoThres SpiRxThresthreshold)
 {
 	base->CR2 = (base->CR2 & ~(SPI_CR2_FRXTH_Msk)) | (SpiRxThresthreshold << SPI_CR2_FRXTH_Pos);
 }
 
 
 ///Enable or disable the DMA function for SPI
-void Spi::ConfigDma(bool isEnableTxDma, bool isEnableRxDma)
+void SpiSlave::ConfigDma(bool isEnableTxDma, bool isEnableRxDma)
 {
 	base->CR2 = (base->CR2 & (~SPI_CR2_TXDMAEN)) | (isEnableTxDma << SPI_CR2_TXDMAEN_Pos);
 	base->CR2 = (base->CR2 & (~SPI_CR2_RXDMAEN)) | (isEnableRxDma << SPI_CR2_RXDMAEN_Pos);
@@ -158,7 +124,7 @@ void Spi::ConfigDma(bool isEnableTxDma, bool isEnableRxDma)
 
 
 
-uint8_t Spi::ReadWriteByte(uint8_t txData)
+uint8_t SpiSlave::ReadWriteByte(uint8_t txData)
 {
 	while (!base->SR & SPI_SR_TXE);
 	base->DR = txData;
@@ -167,7 +133,7 @@ uint8_t Spi::ReadWriteByte(uint8_t txData)
 }
 
 ///Receive data from SPI port
-void Spi::Read(uint8_t* rxData, uint16_t rxSize)
+void SpiSlave::Read(uint8_t* rxData, uint16_t rxSize)
 {
 	while (0 < rxSize)
 	{
@@ -196,8 +162,7 @@ void Spi::Read(uint8_t* rxData, uint16_t rxSize)
 
 
 ///Send data to SPI port
-//bool isRxReady = true;
-void Spi::Write(const uint8_t* txData, uint16_t txSize)
+void SpiSlave::Write(const uint8_t* txData, uint16_t txSize)
 {
 	while (0 < txSize)
 	{
@@ -220,31 +185,15 @@ void Spi::Write(const uint8_t* txData, uint16_t txSize)
 	//Check the end of the transaction
 	//Control if the TX fifo is empty
 	while (base->SR & SPI_SR_FTLVL_Msk);
+	while (base->SR & SPI_SR_BSY_Msk);
 
-	//Control the BSY flag
-	while (base->SR & SPI_SR_BSY_Msk)
-	{
-		base->CR2 &= ~(SPI_CR2_TXEIE | SPI_CR2_RXNEIE | SPI_CR2_ERRIE);
-	}
-
-	// Control if the RX fifo is empty
-	uint8_t tmpreg;
-	while (base->SR & SPI_SR_RXNE_Msk)
-	{
-		tmpreg = *(volatile uint8_t*)&base->DR;
-	}
-
-	//Clear overrun flag in 2 Lines communication mode because received is not read
-	uint32_t tmpreg_ovr = 0x00U;
-	if (!(base->CR1 & SPI_CR1_BIDIMODE_Msk))
-	{
-		tmpreg_ovr = base->DR;
-	}
+	//Flush any data received while transmitting
+	FlushRxFifo();
 }
 
 
 ///Simultaneously send data and receive data 
-void Spi::ReadAndWrite(uint8_t * rxData, const uint8_t * txData, uint16_t size)
+void SpiSlave::ReadAndWrite(uint8_t * rxData, const uint8_t * txData, uint16_t size)
 {
 	if (__null == rxData || __null == txData) return;
 
@@ -331,14 +280,15 @@ void Spi::ReadAndWrite(uint8_t * rxData, const uint8_t * txData, uint16_t size)
 	while (0 != (SPI_SR_BSY_Msk & base->SR));
 }
 
-void Spi::FlushRxFifo()
+///Flush the RX FIFO buffer
+void SpiSlave::FlushRxFifo()
 {
-	uint32_t tmpreg;
+	uint32_t rxData;
 	while (0 != (base->SR & SPI_SR_FRLVL))
 	{
 		if (base->SR & SPI_SR_RXNE)
 		{
-			tmpreg = base->DR;
+			rxData = base->DR;
 		}
 	}
 }

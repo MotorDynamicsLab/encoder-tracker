@@ -4,8 +4,8 @@
 //
 // $Copyright: Copyright (C) LDO Systems
 //###########################################################################
-#ifndef __SPI_H__
-#define __SPI_H__
+#ifndef __SPI_SLAVE_H__
+#define __SPI_SLAVE_H__
 
 #include "HalHeaders.h"
 #include "Gpio.h"
@@ -13,7 +13,7 @@
 //---------------------------------------------------------------------------
 // Class Definition
 //
-class Spi
+class SpiSlave
 {
 protected:
 	//Members
@@ -46,12 +46,6 @@ public:
 		_Fpclk64  = 0b101,  //SPI clock = Fpclk / 64
 		_Fpclk128 = 0b110,  //SPI clock = Fpclk / 128
 		_Fpclk256 = 0b111,  //SPI clock = Fpclk / 256
-	};
-
-	enum SpiMasterSel
-	{
-		_Slave = 0,
-		_Master = 1,
 	};
 
 	enum SpiBitMode
@@ -113,17 +107,16 @@ public:
 	};
 
 	//Methods
-	Spi();
+	SpiSlave();
 	void Initialize(SpiChannel channel);
-	void ConfigModeAndPins(SpiMasterSel MasterSelection, SpiMode cpolCphaMode,SpiPinConfig pinConfig);
+	void ConfigModeAndPins(SpiMode cpolCphaMode,SpiPinConfig pinConfig);
 	void ConfigFrame(SpiLsbFirst lsbfirst, SpiDataSize datasize);
 	void ConfigBaudRatePrescaler(SpiBaudRate baud_rate);
-	void ConfigBitMode(SpiBitMode bidmode);
 	void ConfigCrc(bool isEnableCrc);
 	void ConfigFrameFormat(SpiFrameFormat frf);
 	void ConfigFifoRecThreshold(SpiRxFifoThres status);
 	void ConfigDma(bool isEnableTxDma, bool isEnableRxDma);
-	inline void Enable() { base->CR1 |= SPI_CR1_SPE;}
+	inline void Enable() { base->CR1 |= SPI_CR1_SPE; }
 	inline void Disable() { base->CR1 &= ~SPI_CR1_SPE; }
 	uint8_t ReadWriteByte(uint8_t txData);
 	void Read(uint8_t* rxData, uint16_t rxSize);

@@ -69,7 +69,7 @@
     <ClCompile Include="app_code\hal\src\Gpio.cpp" />
     <ClCompile Include="app_code\hal\src\Gpo.cpp" />
     <ClCompile Include="app_code\hal\src\Nvic.cpp" />
-    <ClCompile Include="app_code\hal\src\Spi.cpp" />
+    <ClCompile Include="app_code\hal\src\SpiSlave.cpp" />
     <ClCompile Include="app_code\hal\src\System.cpp" />
     <ClCompile Include="support\cmsis-core\src\startup_stm32f303xc.c" />
     <ClCompile Include="support\cmsis-core\src\system_stm32f3xx.c" />
@@ -83,7 +83,7 @@
     <ClInclude Include="app_code\hal\inc\BasicTimer.h" />
     <ClInclude Include="app_code\hal\inc\HalHeaders.h" />
     <ClInclude Include="app_code\hal\inc\Nvic.h" />
-    <ClInclude Include="app_code\hal\inc\Spi.h" />
+    <ClInclude Include="app_code\hal\inc\SpiSlave.h" />
     <ClInclude Include="app_code\hal\inc\System.h" />
     <ClInclude Include="app_code\hal\inc\Gpi.h" />
     <ClInclude Include="app_code\hal\inc\Gpio.h" />

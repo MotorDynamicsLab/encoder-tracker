@@ -10,7 +10,7 @@
 #include "Encoder.h"
 #include "Nvic.h"
 #include "ExtInterrupt.h"
-#include "Spi.h"
+#include "SpiSlave.h"
 #include "Gpi.h"
 #include "Gpo.h"
 
@@ -33,7 +33,7 @@ private:
 	};
 
 	ExtInterrupt exti;
-	Spi spi;
+	SpiSlave spi;
 	Encoder encoderList[num_encoders];
 	volatile int32_t encoderVals[num_encoders];
 	volatile int32_t encoderValsSendBuf[num_encoders];

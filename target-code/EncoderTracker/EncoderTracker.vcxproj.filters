@@ -61,9 +61,6 @@
     <ClCompile Include="app_code\hal\src\System.cpp">
       <Filter>app_code\hal\src</Filter>
     </ClCompile>
-    <ClCompile Include="app_code\hal\src\Spi.cpp">
-      <Filter>app_code\hal\src</Filter>
-    </ClCompile>
     <ClCompile Include="app_code\hal\src\Dma.cpp">
       <Filter>app_code\hal\src</Filter>
     </ClCompile>
@@ -80,6 +77,9 @@
       <Filter>app_code\app\src</Filter>
     </ClCompile>
     <ClCompile Include="app_code\hal\src\Encoder.cpp">
+      <Filter>app_code\hal\src</Filter>
+    </ClCompile>
+    <ClCompile Include="app_code\hal\src\SpiSlave.cpp">
       <Filter>app_code\hal\src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,9 +147,6 @@
     <ClInclude Include="app_code\hal\inc\HalHeaders.h">
       <Filter>app_code\hal\inc</Filter>
     </ClInclude>
-    <ClInclude Include="app_code\hal\inc\Spi.h">
-      <Filter>app_code\hal\inc</Filter>
-    </ClInclude>
     <ClInclude Include="app_code\hal\inc\Dma.h">
       <Filter>app_code\hal\inc</Filter>
     </ClInclude>
@@ -166,6 +163,9 @@
       <Filter>app_code\app\inc</Filter>
     </ClInclude>
     <ClInclude Include="app_code\hal\inc\Encoder.h">
+      <Filter>app_code\hal\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="app_code\hal\inc\SpiSlave.h">
       <Filter>app_code\hal\inc</Filter>
     </ClInclude>
   </ItemGroup>

@@ -82,7 +82,7 @@ void App::ConfigEncoder()
 ///Configures an SPI module as slave
 void App::ConfigSpi()
 {
-	Spi::SpiPinConfig spiPinConfig;
+	SpiSlave::SpiPinConfig spiPinConfig;
 	spiPinConfig.sckPin = 5;
 	spiPinConfig.mosiPin = 7;
 	spiPinConfig.misoPin = 6;
@@ -95,14 +95,13 @@ void App::ConfigSpi()
 	spiPinConfig.mosiCh = Gpio::_ChA;
 	spiPinConfig.sckCh = Gpio::_ChA;
 
-	spi.Initialize(Spi::_Spi1);
-	spi.ConfigBitMode(Spi::_TwoLine);
+	spi.Initialize(SpiSlave::_Spi1);
 	spi.ConfigCrc(false);
-	spi.ConfigFrame(Spi::_MsbFirst, Spi::_8Bit);
-	spi.ConfigFifoRecThreshold(Spi::_1Byte);
-	spi.ConfigFrameFormat(Spi::_MotorolaMode);
-	spi.ConfigModeAndPins(Spi::_Slave, Spi::_Cpol0Cpha0, spiPinConfig);
-	spi.ConfigBaudRatePrescaler(Spi::_Fpclk8);
+	spi.ConfigFrame(SpiSlave::_MsbFirst, SpiSlave::_8Bit);
+	spi.ConfigFifoRecThreshold(SpiSlave::_1Byte);
+	spi.ConfigFrameFormat(SpiSlave::_MotorolaMode);
+	spi.ConfigModeAndPins(SpiSlave::_Cpol0Cpha0, spiPinConfig);
+	spi.ConfigBaudRatePrescaler(SpiSlave::_Fpclk8);
 	spi.Enable();
 }
 
