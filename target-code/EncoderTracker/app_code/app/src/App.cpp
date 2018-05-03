@@ -104,11 +104,6 @@ void App::ConfigSpi()
 	spi.ConfigModeAndPins(Spi::_Slave, Spi::_Cpol0Cpha0, spiPinConfig);
 	spi.ConfigBaudRatePrescaler(Spi::_Fpclk8);
 	spi.Enable();
-
-	//this pin is used to enable or disable the 3.3V->5V level shifter
-	//when disabled, the level shifter outputs high impedence, allowing other SPI slaves to use
-	//the MISO line.
-	misoEnable.Initialize(Gpio::_ChB, 9, Gpio::_High);
 }
 
 
@@ -160,7 +155,7 @@ void App::Execute()
 ///Interprets and executes command from the SPI master
 void App::ServeSpi()
 {
-	uint8_t header = 0; 
+	uint8_t header = 0;
 	uint8_t cmd = 0;
 	spi.Read(&header, 1);
 	cmd = header & cmd_mask;
@@ -193,9 +188,7 @@ void App::SendEncoderVals(uint8_t header)
 		encSelector >>= 1;
 	}
 
-	misoEnable.Clear();
 	spi.Write( (uint8_t*)txBuffer, numTxEncoders * sizeof(int32_t) );
-	misoEnable.Set();
 }
 
 
