@@ -38,14 +38,19 @@ void SpiSlave::Initialize(SpiChannel channel)
 
 ///Performs basic configuration, selects Master/Slave mode
 ///Selects CPOL and CPHA values.
-///Configures GPIO pins for SPI use
-void SpiSlave::ConfigModeAndPins(SpiMode cpolCphaMode, SpiPinConfig pinConfig)
+void SpiSlave::ConfigMode(SpiMode cpolCphaMode)
 {
+	//Configures SPI as slave mode
 	base->CR1 &= ~SPI_CR1_MSTR;
 
 	const uint32_t cpol_cpha_msk = SPI_CR1_CPOL | SPI_CR1_CPHA;
 	base->CR1 = (base->CR1 & ~cpol_cpha_msk) | cpolCphaMode;
+}
 
+
+///Configures GPIO pins for SPI use
+void SpiSlave::ConfigPins(SpiPinConfig pinConfig)
+{
 	Gpio misoPin;
 	Gpio mosiPin;
 	Gpio sckPin;

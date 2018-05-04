@@ -99,9 +99,10 @@ void App::ConfigSpi()
 	spiPinConfig.nssCh = Gpio::_ChA;
 
 	spi.Initialize(SpiSlave::_Spi1);
+	spi.ConfigPins(spiPinConfig);
+	spi.ConfigMode(SpiSlave::_Cpol0Cpha0);
 	spi.ConfigFrame(SpiSlave::_MsbFirst, SpiSlave::_8Bit);
 	spi.ConfigFifoRecThreshold(SpiSlave::_1Byte);
-	spi.ConfigModeAndPins(SpiSlave::_Cpol0Cpha0, spiPinConfig);
 	spi.ConfigBaudRatePrescaler(SpiSlave::_Fpclk8);
 	spi.Enable();
 }
