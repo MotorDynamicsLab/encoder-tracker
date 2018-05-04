@@ -21,6 +21,8 @@ protected:
 	volatile SPI_TypeDef *base;
 	Gpi nssPin;
 
+	bool isSelected() { return 0 == nssPin.ReadRaw(); }
+
 public:
 	//Enumerations
 	enum SpiChannel
