@@ -169,6 +169,8 @@ void App::ServeSpi()
 	{
 		ClearEncoderVals(header);
 	}
+
+	ResetSpi();
 }
 
 
@@ -184,7 +186,6 @@ void App::SendEncoderVals(uint8_t header)
 		if (encSelector & 0x01)
 		{
 			txBuffer[numTxEncoders++] = encoderValsSendBuf[i];
-			break;
 		}
 		encSelector >>= 1;
 	}
@@ -221,4 +222,18 @@ void App::ReverseEndian(int32_t* num)
 		temp1[i] = temp1[3 - i];
 		temp1[3 - i] = ch;
 	}
+}
+
+
+///Resets the Spi module, which forces its registers to an initial state
+void App::ResetSpi()
+{
+	RCC->APB2RSTR |= RCC_APB2RSTR_SPI1RST;
+	RCC->APB2RSTR &= ~RCC_APB2RSTR_SPI1RST;
+
+	spi.ConfigMode(SpiSlave::_Cpol0Cpha0);
+	spi.ConfigFrame(SpiSlave::_MsbFirst, SpiSlave::_8Bit);
+	spi.ConfigFifoRecThreshold(SpiSlave::_1Byte);
+	spi.ConfigBaudRatePrescaler(SpiSlave::_Fpclk8);
+	spi.Enable();
 }
