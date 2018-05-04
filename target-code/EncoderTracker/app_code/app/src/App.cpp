@@ -82,6 +82,8 @@ void App::ConfigEncoder()
 ///Configures an SPI module as slave
 void App::ConfigSpi()
 {
+	misoEnable.Initialize(Gpio::_ChB, 9, Gpio::_High);
+
 	SpiSlave::SpiPinConfig spiPinConfig;
 	spiPinConfig.sckPin = 5;
 	spiPinConfig.mosiPin = 7;
@@ -188,7 +190,9 @@ void App::SendEncoderVals(uint8_t header)
 		encSelector >>= 1;
 	}
 
+	misoEnable.Clear();
 	spi.Write( (uint8_t*)txBuffer, numTxEncoders * sizeof(int32_t) );
+	misoEnable.Set();
 }
 
 

@@ -34,6 +34,7 @@ private:
 
 	ExtInterrupt exti;
 	SpiSlave spi;
+	Gpo misoEnable;
 	Encoder encoderList[num_encoders];
 	volatile int32_t encoderVals[num_encoders];
 	volatile int32_t encoderValsSendBuf[num_encoders];
