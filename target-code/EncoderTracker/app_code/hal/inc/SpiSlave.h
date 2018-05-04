@@ -107,7 +107,8 @@ public:
 	//Methods
 	SpiSlave();
 	void Initialize(SpiChannel channel);
-	void ConfigModeAndPins(SpiMode cpolCphaMode,SpiPinConfig pinConfig);
+	void ConfigMode(SpiMode cpolCphaMode);
+	void ConfigPins(SpiPinConfig pinConfig);
 	void ConfigFrame(SpiLsbFirst lsbfirst, SpiDataSize datasize);
 	void ConfigBaudRatePrescaler(SpiBaudRate baud_rate);
 	void ConfigFifoRecThreshold(SpiRxFifoThres status);

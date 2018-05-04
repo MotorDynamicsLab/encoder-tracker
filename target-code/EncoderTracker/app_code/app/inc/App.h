@@ -47,6 +47,7 @@ private:
 	void SendEncoderVals(uint8_t header);
 	void ClearEncoderVals(uint8_t header);
 	void ReverseEndian(int32_t* num);
+	void ResetSpi();
 
 public:
 	App();
