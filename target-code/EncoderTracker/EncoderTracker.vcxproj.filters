@@ -38,6 +38,9 @@
     <Filter Include="app_code\app\inc">
       <UniqueIdentifier>{4e671d5b-c5a6-4b4d-939d-55f93372879a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Device-specific files">
+      <UniqueIdentifier>{2949c52d-2892-4746-ba60-f8a2f3bc1bc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="support\cmsis-core\src\system_stm32f3xx.c">
