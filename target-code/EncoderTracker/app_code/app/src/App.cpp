@@ -104,7 +104,6 @@ void App::ConfigSpi()
 	spi.ConfigFrame(SpiSlave::_MsbFirst, SpiSlave::_8Bit);
 	spi.ConfigFifoRecThreshold(SpiSlave::_1Byte);
 	spi.ConfigBaudRatePrescaler(SpiSlave::_Fpclk8);
-	spi.Enable();
 }
 
 
@@ -156,6 +155,7 @@ void App::Execute()
 ///Interprets and executes command from the SPI master
 void App::ServeSpi()
 {
+	spi.Enable();
 	uint8_t header = 0;
 	uint8_t cmd = 0;
 	spi.Read(&header, 1);
@@ -170,7 +170,7 @@ void App::ServeSpi()
 		ClearEncoderVals(header);
 	}
 
-	ResetSpi();
+	spi.Disable();
 }
 
 
