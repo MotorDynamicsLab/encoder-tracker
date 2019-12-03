@@ -20,9 +20,7 @@ protected:
 	//Members
 	volatile SPI_TypeDef *base;
 	Gpi nssPin;
-
-	bool isSelected() { return 0 == nssPin.ReadRaw(); }
-
+	
 public:
 	//Enumerations
 	enum SpiChannel
@@ -120,6 +118,8 @@ public:
 	void Write(const uint8_t* txData, uint16_t txSize);
 	void ReadAndWrite(uint8_t* rxData, const uint8_t* txData, uint16_t size);
 	void FlushRxFifo();
+	bool IsSelected() { return 0 == nssPin.ReadRaw(); }
+
 };
 
 #endif /* __SPI_H__ */

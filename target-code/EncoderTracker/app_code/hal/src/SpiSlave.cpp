@@ -123,16 +123,16 @@ void SpiSlave::ConfigDma(bool isEnableTxDma, bool isEnableRxDma)
 
 uint8_t SpiSlave::ReadWriteByte(uint8_t txData)
 {
-	while (!base->SR & SPI_SR_TXE && isSelected());
+	while (!base->SR & SPI_SR_TXE && IsSelected());
 	base->DR = txData;
-	while (!base->SR & SPI_SR_RXNE && isSelected());
+	while (!base->SR & SPI_SR_RXNE && IsSelected());
 	return uint8_t(base->DR);
 }
 
 ///Receive data from SPI port
 void SpiSlave::Read(uint8_t* rxData, uint16_t rxSize)
 {
-	while (0 < rxSize && isSelected() )
+	while (0 < rxSize && IsSelected() )
 	{
 		if (base->SR & SPI_SR_RXNE_Msk)
 		{
@@ -144,10 +144,10 @@ void SpiSlave::Read(uint8_t* rxData, uint16_t rxSize)
 
 	//Check the end of the transaction
 	//Control if the TX fifo is empty
-	while (base->SR & SPI_SR_FTLVL_Msk && isSelected() );
+	while (base->SR & SPI_SR_FTLVL_Msk && IsSelected() );
 
 	//Check the BSY flag
-	while (base->SR & SPI_SR_BSY_Msk && isSelected() );
+	while (base->SR & SPI_SR_BSY_Msk && IsSelected() );
 
 	//Flush any extra data received
 	FlushRxFifo();
@@ -157,7 +157,7 @@ void SpiSlave::Read(uint8_t* rxData, uint16_t rxSize)
 ///Send data to SPI port
 void SpiSlave::Write(const uint8_t* txData, uint16_t txSize)
 {
-	while (0 < txSize && isSelected() )
+	while (0 < txSize && IsSelected() )
 	{
 		if (base->SR & SPI_SR_TXE_Msk )
 		{
@@ -176,8 +176,8 @@ void SpiSlave::Write(const uint8_t* txData, uint16_t txSize)
 	}
 
 	//Check if the TX fifo is empty, then wait until the end of the transaction (last byte)
-	while (base->SR & SPI_SR_FTLVL_Msk && isSelected() );
-	while (base->SR & SPI_SR_BSY_Msk && isSelected() );
+	while (base->SR & SPI_SR_FTLVL_Msk && IsSelected() );
+	while (base->SR & SPI_SR_BSY_Msk && IsSelected() );
 
 	//Flush any data received while transmitting
 	FlushRxFifo();
@@ -216,7 +216,7 @@ void SpiSlave::ReadAndWrite(uint8_t * rxData, const uint8_t * txData, uint16_t s
 		}
 	}
 
-	while (TxCount > 0 || RxCount > 0 && isSelected() )
+	while (TxCount > 0 || RxCount > 0 && IsSelected() )
 	{
 		//check TXE flag
 		if (txallowed && (TxCount > 0) && (SPI_SR_TXE == (base->SR & SPI_SR_TXE)))
@@ -264,8 +264,8 @@ void SpiSlave::ReadAndWrite(uint8_t * rxData, const uint8_t * txData, uint16_t s
 	}
 
 	//Check the end of the transaction
-	while (0 != (SPI_SR_FTLVL_Msk & base->SR) && isSelected() );
-	while (0 != (SPI_SR_BSY_Msk & base->SR) && isSelected() );
+	while (0 != (SPI_SR_FTLVL_Msk & base->SR) && IsSelected() );
+	while (0 != (SPI_SR_BSY_Msk & base->SR) && IsSelected() );
 }
 
 ///Flush the RX FIFO buffer
