@@ -22,7 +22,7 @@ int main(void)
 
 extern "C"
 {
-	void EXTI4_IRQHandler()
+	__attribute__((section(".ccmram"))) void EXTI4_IRQHandler()
 	{
 		app.ServeSpi();
 		app.ExtIntClear();

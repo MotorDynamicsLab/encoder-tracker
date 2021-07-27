@@ -795,6 +795,7 @@ void SystemInit();
 void __libc_init_array();
 int main();
 
+extern void *_siccmram, *_sccmram, *_eccmram;
 extern void *_sidata, *_sdata, *_edata;
 extern void *_sbss, *_ebss;
 
@@ -808,6 +809,9 @@ void __attribute__((naked, noreturn)) Reset_Handler()
 
 	void **pSource, **pDest;
 	for (pSource = &_sidata, pDest = &_sdata; pDest != &_edata; pSource++, pDest++)
+		*pDest = *pSource;
+
+	for (pSource = &_siccmram, pDest = &_sccmram; pDest != &_eccmram; pSource++, pDest++)
 		*pDest = *pSource;
 
 	for (pDest = &_sbss; pDest != &_ebss; pDest++)

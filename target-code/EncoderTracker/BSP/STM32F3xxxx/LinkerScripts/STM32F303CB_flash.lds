@@ -14,6 +14,8 @@ MEMORY
 
 _estack = 0x20008000;
 
+_siccmram = LOADADDR(.ccmram);
+
 SECTIONS
 {
 	.isr_vector :
@@ -40,6 +42,17 @@ SECTIONS
 		_etext = .;
 
 	} > FLASH
+    
+	.ccmram :
+	{
+		. = ALIGN(4);
+		_sccmram = .;
+		*(.ccmram)
+		*(.ccmram*)
+		
+		. = ALIGN(4);
+		_eccmram = .;
+	} > CCMRAM AT > FLASH
 
 	.ARM.extab :
 	{

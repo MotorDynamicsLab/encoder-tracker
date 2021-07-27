@@ -10,4 +10,6 @@
 #include <stdint.h>
 #include "stm32f3xx.h"
 
+#define __ccm   __attribute__((section(".ccmram")))
+
 #endif

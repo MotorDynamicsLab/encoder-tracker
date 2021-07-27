@@ -100,7 +100,7 @@ void App::ConfigSpi()
 
 	spi.Initialize(SpiSlave::_Spi1);
 	spi.ConfigPins(spiPinConfig);
-	spi.ConfigMode(SpiSlave::_Cpol0Cpha0);
+	spi.ConfigMode(SpiSlave::_Cpol1Cpha1);
 	spi.ConfigFrame(SpiSlave::_MsbFirst, SpiSlave::_8Bit);
 	spi.ConfigFifoRecThreshold(SpiSlave::_1Byte);
 	spi.ConfigBaudRatePrescaler(SpiSlave::_Fpclk8);
@@ -129,7 +129,7 @@ void App::ConfigExtInt()
 
 ///Reads the encoder counts from the Timer modules and converts them into 32bit signed values
 ///This function should be called in the main loop
-void App::Execute()
+__ccm void App::Execute()
 {
 	uint16_t encCount = 0;
 	int32_t encoderDataTemp = 0;
@@ -153,7 +153,7 @@ void App::Execute()
 
 
 ///Interprets and executes command from the SPI master
-void App::ServeSpi()
+__ccm void App::ServeSpi()
 {
 	spi.Enable();
 	uint8_t header = 0;
@@ -175,7 +175,7 @@ void App::ServeSpi()
 
 
 ///Transmits selected encoder values to the SPI master
-void App::SendEncoderVals(uint8_t header)
+__ccm void App::SendEncoderVals(uint8_t header)
 {
 	uint8_t encSelector = header >> enc_offset;
 	uint16_t numTxEncoders = 0;
@@ -195,7 +195,7 @@ void App::SendEncoderVals(uint8_t header)
 
 
 ///Resets selected encoder values to 0
-void App::ClearEncoderVals(uint8_t header)
+__ccm void App::ClearEncoderVals(uint8_t header)
 {
 	uint8_t encSelector = header >> enc_offset;
 
@@ -212,7 +212,7 @@ void App::ClearEncoderVals(uint8_t header)
 
 
 ///Reverses byte endianness of data
-void App::ReverseEndian(int32_t* num)
+__ccm void App::ReverseEndian(int32_t* num)
 {
 	uint8_t* temp1 = (uint8_t*)num;
 	uint8_t ch = 0;
