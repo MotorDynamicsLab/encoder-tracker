@@ -121,7 +121,7 @@ void SpiSlave::ConfigDma(bool isEnableTxDma, bool isEnableRxDma)
 
 
 
-uint8_t SpiSlave::ReadWriteByte(uint8_t txData)
+__ccm uint8_t SpiSlave::ReadWriteByte(uint8_t txData)
 {
 	while (!base->SR & SPI_SR_TXE && IsSelected());
 	base->DR = txData;
@@ -130,7 +130,7 @@ uint8_t SpiSlave::ReadWriteByte(uint8_t txData)
 }
 
 ///Receive data from SPI port
-void SpiSlave::Read(uint8_t* rxData, uint16_t rxSize)
+ __ccm void SpiSlave::Read(uint8_t* rxData, uint16_t rxSize)
 {
 	while (0 < rxSize && IsSelected() )
 	{
@@ -155,7 +155,7 @@ void SpiSlave::Read(uint8_t* rxData, uint16_t rxSize)
 
 
 ///Send data to SPI port
-void SpiSlave::Write(const uint8_t* txData, uint16_t txSize)
+__ccm void SpiSlave::Write(const uint8_t* txData, uint16_t txSize)
 {
 	while (0 < txSize && IsSelected() )
 	{
@@ -185,7 +185,7 @@ void SpiSlave::Write(const uint8_t* txData, uint16_t txSize)
 
 
 ///Simultaneously send data and receive data 
-void SpiSlave::ReadAndWrite(uint8_t * rxData, const uint8_t * txData, uint16_t size)
+__ccm void SpiSlave::ReadAndWrite(uint8_t * rxData, const uint8_t * txData, uint16_t size)
 {
 	if (__null == rxData || __null == txData) return;
 
