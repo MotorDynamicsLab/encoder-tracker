@@ -100,7 +100,7 @@ void App::ConfigSpi()
 
 	spi.Initialize(SpiSlave::_Spi1);
 	spi.ConfigPins(spiPinConfig);
-	spi.ConfigMode(SpiSlave::_Cpol0Cpha0);
+	spi.ConfigMode(SpiSlave::_Cpol1Cpha1);
 	spi.ConfigFrame(SpiSlave::_MsbFirst, SpiSlave::_8Bit);
 	spi.ConfigFifoRecThreshold(SpiSlave::_1Byte);
 	spi.ConfigBaudRatePrescaler(SpiSlave::_Fpclk8);

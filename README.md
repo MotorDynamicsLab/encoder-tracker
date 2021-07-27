@@ -9,8 +9,8 @@ After CS is enabled, slave awaits 8 bit command from master, slave then transfer
 |     |     |
 | --- | --- |  
 | Chip select pin |	D22 (PA0) |	 
-| CPOL | 0	|  
-| CPHA | 0 |  
+| CPOL | 1 |  
+| CPHA | 1 |  
 | Master |	Arduino Mega |  
 | Slave	| STM32	|  
 | Format |	8 bit command byte + (optional data from slave) (MSB first)	|  
